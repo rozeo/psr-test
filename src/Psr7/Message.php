@@ -81,7 +81,7 @@ class Message implements MessageInterface
 
         try {
             $this->headers[$name] = array_map("strval", $value);
-        } catch(\Exception $e) {
+        } catch(\Error $e) {
             throw new InvalidArgumentException("Unexpected value passed, value is not string|string[].");
         }
 
@@ -102,7 +102,7 @@ class Message implements MessageInterface
             $value = array_map("strval", $value);
             $this->headers[$name] = array_merge($this->headers[$name], $value);
 
-        } catch(\Exception $e) {
+        } catch(\Error $e) {
             throw new InvalidArgumentException("Unexpected value passed, value is not string|string[]");
         }
 
