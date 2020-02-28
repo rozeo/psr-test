@@ -131,4 +131,33 @@ class MessageTest extends TestCase
 
         $this->assertTrue($message->hasHeader($name) === false);
     }
+
+    public function test_MultiHeaderCheck()
+    {
+        $message = new Message();
+        $name1 = "test2312";
+        $value1 = ["abc", "def"];
+        $name2 = "test1231";
+        $value2 = "abcd";
+
+        $message->withHeader($name1, $value1)
+            ->withHeader($name2, $value2);
+
+        $this->assertEquals($message->getHeaders(), [
+            $name1 => $value1,
+            $name2 => [$value2],
+        ]);
+    }
+
+    public function test_SetStreamBody()
+    {
+        $message = new Message();
+        $stream = new Rozeo\Psr7\Stream();
+
+        $stream->write(12345);
+
+        $message->withBody($stream);
+
+        $this->assertEquals($message->getBody(), $stream);
+    }
 }
