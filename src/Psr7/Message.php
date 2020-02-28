@@ -10,22 +10,22 @@ use InvalidArgumentException;
 class Message implements MessageInterface
 {
     /**
-     * @var string http protocol version string
+     * @var string http protocol version 
      */
     private $protocolVersion;
 
 
     /**
-     * @var string[][] http header string array  
+     * @var string[][] http header  array  
      */
     private $headers;
 
     /**
-     * @var Psr\Http\Message\StreamInterface http body
+     * @var \Psr\Http\Message\StreamInterface|null http body
      */
     private $body;
 
-    protected function __construct()
+    public function __construct()
     {
         $this->protocolVersion = "1.0";
         $this->headers = [];
@@ -33,71 +33,73 @@ class Message implements MessageInterface
     }
 
     /**
-     * get http protocol version string
-     * @return string
+     * get http protocol version 
+     * @return string 
      */
-    protected function getProtocolVersion()
+    public function getProtocolVersion()
     {
         return $this->protocolVersion;    
     } 
 
     /**
-     * set http protocol version string
+     * set http protocol version 
      *
      * @param string $version HTTP protocol version
-     * @return $this
+     * @return static
      */
-    protected function withProtocolVersion(string $version)
+    public function withProtocolVersion($version)
     {
         $this->protocolVersion = $version;
         return $this;
     }
 
-    protected function getHeaders()
+    public function getHeaders()
     {
         return $this->headers;
     }
 
-    protected function hasHeader(string $name): bool
+    public function hasHeader($name)
     {
         return isset($this->headers[$name]);
     }
 
-    protected function getHeader(string $name): array
+    public function getHeader($name)
     {
         return $this->headers[$name] ?? [];
     }
 
-    protected function getHeaderLine(string $name): string
+    public function getHeaderLine($name)
     {
         return join(",", $this->getHeader($name));
     }
 
-    protected function withHeader(string $name, $value): self
+    public function withHeader($name, $value)
     {
         if (is_array($value)) {
             $this->headers[$name] = array_map("strval", $value);
         } elseif (is_string($value)) {
             $this->headers[$name] = [$value];
         } else {
-            throw new InvalidArgumentException("$value is not string|string[].");
+            throw new InvalidArgumentException("$value is not |[].");
         }
 
         return $this;
     }
 
-    protected function withAddedHeader(string $name, $value): self
+    public function withAddedHeader($name, $value)
     {
         if (is_array($value)) {
             $this->headers[$name] = array_merge($this->headers, array_map("strval", $value));
         } elseif (is_string($value)) {
             $this->headers[$name][] = $value;
         } else {
-            throw new InvalidArgumentException("$value is not string|string[]");
+            throw new InvalidArgumentException("$value is not |[]");
         }
+
+        return $this;
     }
 
-    protected function withoutHeader(string $name): self
+    public function withoutHeader($name)
     {
         unset($this->headers[$name]);
         return $this;
@@ -108,7 +110,7 @@ class Message implements MessageInterface
         return $this->body;
     }
 
-    public function withBody(StreamInterface $body): self
+    public function withBody(StreamInterface $body)
     {
         $this->body = $body;
         return $this;
