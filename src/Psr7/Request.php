@@ -56,7 +56,7 @@ class Request extends Message implements RequestInterface
         return $this->uri;
     }
 
-    public function withUri($uri)
+    public function withUri($uri, $preservedHost = false)
     {
         $this->uri = $uri;
         return $this;
