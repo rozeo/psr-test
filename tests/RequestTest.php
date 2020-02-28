@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 use Rozeo\Psr7\Request;
 
-class RequestTest
+class RequestTest extends TestCase
 {
     public function test_RequestTarget()
     {
