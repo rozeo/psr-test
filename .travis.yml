@@ -7,4 +7,4 @@ script:
   - ./vendor/bin/phpunit
 
 after_script:
-  - ./vendor/bin/php-coveralls -v -c .coveralls.y
+  - ./vendor/bin/php-coveralls -v -c coveralls.yml
