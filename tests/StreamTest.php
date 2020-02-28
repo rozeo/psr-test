@@ -63,7 +63,7 @@ class StreamTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException RuntimeException
      */
     public function test_SeekCurExceptionWithOverOffset()
     {
@@ -75,7 +75,7 @@ class StreamTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException RuntimeException
      */
     public function test_SeekCurExceptionWithUnderZero()
     {
