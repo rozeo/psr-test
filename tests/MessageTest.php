@@ -90,7 +90,7 @@ class MessageTest extends TestCase
         $value1 = "value1";
         $value2 = "value2";
 
-        $message->withHeader($name, $value1);
+        $message->withHeader($name, $value1)
                 ->withAddedHeader($name, $value2);
 
         $this->assertEquals($this->getHeader($name), [$value1, $value2]);
