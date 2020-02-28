@@ -9,7 +9,7 @@
          processIsolation="false"
          stopOnFailure="false">
 <testsuites>
-    <testsuite name="Application Test Suite">
+  <testsuite name="Application Test Suite">
         <directory>./tests/</directory>
     </testsuite>
 </testsuites>
@@ -26,7 +26,7 @@
 
 <!-- output coverage -->
 <logging>
-    <log type="coverage-clover" target="coverage.xml"/>
+    <log type="coverage-clover" target="./coverage.xml" />
 </logging>
 
 <php>

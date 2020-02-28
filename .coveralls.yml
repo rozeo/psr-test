@@ -1,4 +1,5 @@
 service_name: travis-pro
 repo_token: zRlyDacLp7M2GQIAze1q51KizZLrzMUJW
 
-coverage_clover: coverrage.xml
+coverage_clover: coverage.xml
+exclude_no_stmt: true
