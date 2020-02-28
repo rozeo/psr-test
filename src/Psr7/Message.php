@@ -80,7 +80,7 @@ class Message implements MessageInterface
         } elseif (is_string($value)) {
             $this->headers[$name] = [$value];
         } else {
-            throw new InvalidArgumentException("$value is not |[].");
+            throw new InvalidArgumentException("Unexpected value passed, value is not string|string[].");
         }
 
         return $this;
@@ -93,7 +93,7 @@ class Message implements MessageInterface
         } elseif (is_string($value)) {
             $this->headers[$name][] = $value;
         } else {
-            throw new InvalidArgumentException("$value is not |[]");
+            throw new InvalidArgumentException("Unexpected value passed, value is not string|string[]");
         }
 
         return $this;

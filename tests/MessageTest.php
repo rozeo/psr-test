@@ -31,7 +31,7 @@ class MessageTest extends TestCase
 
         $message->withHeader($name, $value);
 
-        $this->assertTrue($this->hasHeader($name));
+        $this->assertTrue($message->hasHeader($name));
     }
 
     public function test_SetHeaderWithString()
@@ -43,7 +43,7 @@ class MessageTest extends TestCase
 
         $message->withHeader($name, $value);
 
-        $this->assertEquals($this->getHeader($name), [$value]);
+        $this->assertEquals($message->getHeader($name), [$value]);
     }
 
 
@@ -56,7 +56,7 @@ class MessageTest extends TestCase
 
         $message->withHeader($name, $value);
 
-        $this->assertEquals($this->getHeader($name), $value);
+        $this->assertEquals($message->getHeader($name), $value);
     }
 
     public function test_GetHeaderLine()
@@ -68,7 +68,7 @@ class MessageTest extends TestCase
 
         $message->withHeader($name, $value);
 
-        $this->assertEquals($this->getHeaderLine($name), "value1,value2");
+        $this->assertEquals($message->getHeaderLine($name), "value1,value2");
     }
 
     public function test_SetHeaderWithUnexpectedTypeValue()
@@ -93,7 +93,7 @@ class MessageTest extends TestCase
         $message->withHeader($name, $value1)
                 ->withAddedHeader($name, $value2);
 
-        $this->assertEquals($this->getHeader($name), [$value1, $value2]);
+        $this->assertEquals($message->getHeader($name), [$value1, $value2]);
     }
 
     public function test_AddHeaderWithArray()
@@ -107,7 +107,7 @@ class MessageTest extends TestCase
         $message->withHeader($name, $value1)
             ->withAddedHeader($name, $value2);
 
-        $this->assertEquals($message->getHeader($name), $value1 + $value2);
+        $this->assertEquals($message->getHeader($name), array_merge($value1, $value2));
     }
 
     public function test_AddHeaderWithUnexpectedValueType()
