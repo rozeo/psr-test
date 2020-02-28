@@ -56,7 +56,7 @@ class Stream implements StreamInterface
 
     public function eof(): bool
     {
-        return $this->offset > $this->getSize();
+        return $this->offset >= $this->getSize();
     }
 
     public function isSeekable(): bool
@@ -66,32 +66,30 @@ class Stream implements StreamInterface
 
     public function seek($offset, $whence = \SEEK_SET)
     {
+        $nextOffset = 0;
         switch($whence)
         {
-        case \SEEK_SET:
-            if ($offset > $this->getSize()) {
-                throw new RuntimeException("offset over stream size.");
-            }
-            $this->offset = $offset;
+        case SEEK_SET:
+            $nextOffset = $offset;
             break;
 
-        case \SEEK_CUR:
-            if ($this->offset + $offset > $this->getSize()) {
-                throw new RuntimeException("offset over stream size.");
-            }
-            $this->offset += $offset;
+        case SEEK_CUR:
+            $nextOffset = $this->offset + $offset;
             break;
 
-        case \SEEK_END:
-            if ($this->getSize() - $offset < 0) {
-                throw new RuntimeException("offset under than 0.");
-            }
-            $this->offset = $this->getSize() - $offset;
+        case SEEK_END:
+            $nextOffset = $this->getSize() - $offset;
             break;
 
         default:
             throw new RuntimeException("Invalid whence option.");
         }    
+        
+        if ($nextOffset > $this->getSize() || $nextOffset < 0) {
+            throw new RuntimeException("offset[$nextOffset] is out of range.");
+        }
+
+        $this->offset = $nextOffset;
 
         return $this;
     }

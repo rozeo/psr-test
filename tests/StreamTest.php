@@ -51,6 +51,47 @@ class StreamTest extends TestCase
         $this->assertTrue($stream->tell() === 1);
     }
 
+    public function test_SeekCur()
+    {
+        $stream = new Stream();
+        $str = "12345";
+        $stream->write($str);
+
+        $stream->seek(-5, SEEK_CUR);
+
+        $this->assertTrue($stream->tell() === 0);
+    }
+
+    public function test_SeekCurExceptionWithOverOffset()
+    {
+        $stream = new Stream();
+        $str = "123456";
+        $stream->write($str);
+
+        try {
+            $stream->seek(1, SEEK_CUR);
+        } catch(\InvalidArgumentException $e) {
+            $this->assertTrue(true);
+        }
+
+        $this->assertTrue(false);
+    }
+
+    public function test_SeekCurExceptionWithUnderZero()
+    {
+        $stream = new Stream();
+        $str = "123456";
+        $stream->write($str);
+
+        try {
+            $stream->seek(-strlen($str) - 1, SEEK_CUR);
+        } catch(\InvalidArgumentException $e) {
+            $this->assertTrue(true);
+        }
+
+        $this->assertTrue(false);
+    }
+
     public function test_Read()
     {
         $stream = new Stream();
