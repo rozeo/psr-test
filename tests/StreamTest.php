@@ -62,11 +62,10 @@ class StreamTest extends TestCase
         $this->assertTrue($stream->tell() === 0);
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
     public function test_SeekCurExceptionWithOverOffset()
     {
+        $this->expectException(RuntimeException::class);
+
         $stream = new Stream();
         $str = "123456";
         $stream->write($str);
@@ -74,16 +73,58 @@ class StreamTest extends TestCase
         $stream->seek(1, SEEK_CUR);
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
     public function test_SeekCurExceptionWithUnderZero()
     {
+
+        $this->expectException(RuntimeException::class);
+        
         $stream = new Stream();
         $str = "123456";
         $stream->write($str);
 
         $stream->seek(-strlen($str) - 1, SEEK_CUR);
+    }
+
+    public function test_SeekEnd()
+    {
+        $stream = new Stream();
+
+        $str = "1234";
+        $stream->write($str);
+
+        $stream->seek(strlen($str), SEEK_END);
+
+        $this->assertTrue($stream->getContents() === $str);
+    }
+
+    public function test_SeekEndExceptionWithOverOffset()
+    {
+        $this->expectException(RuntimeException::class);
+
+        $stream = new Stream();
+
+        $str = "123456";
+        $stream->write($str);
+
+        $stream->seek(strlen($str) + 1, SEEK_END);
+    }
+
+    public function test_SeekEndExceptionWithUnderZero()
+    {
+        $this->expectException(RuntimeException::class);
+        $stream = new Stream();
+        $str = "123456";
+
+        $stream->write($str);
+        $stream->seek(-1, SEEK_END);
+    }
+
+    public function test_EofCheck()
+    {
+        $stream = new Stream();
+        $stream->write("1234");
+
+        $this->assertTrue($stream->eof() && $stream->getContents() === "");
     }
 
     public function test_Read()
