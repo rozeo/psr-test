@@ -75,11 +75,13 @@ class Message implements MessageInterface
 
     public function withHeader($name, $value)
     {
-        if (is_array($value)) {
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        try {
             $this->headers[$name] = array_map("strval", $value);
-        } elseif (is_string($value)) {
-            $this->headers[$name] = [$value];
-        } else {
+        } catch(\Exception $e) {
             throw new InvalidArgumentException("Unexpected value passed, value is not string|string[].");
         }
 
@@ -88,11 +90,19 @@ class Message implements MessageInterface
 
     public function withAddedHeader($name, $value)
     {
-        if (is_array($value)) {
-            $this->headers[$name] = array_merge($this->headers[$name], array_map("strval", $value));
-        } elseif (is_string($value)) {
-            $this->headers[$name][] = $value;
-        } else {
+        if (!$this->hasHeader($name)) {
+            return $this->withHeader($name, $value);
+        }
+
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        try {
+            $value = array_map("strval", $value);
+            $this->headers[$name] = array_merge($this->headers[$name], $value);
+
+        } catch(\Exception $e) {
             throw new InvalidArgumentException("Unexpected value passed, value is not string|string[]");
         }
 

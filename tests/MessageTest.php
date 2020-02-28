@@ -121,6 +121,17 @@ class MessageTest extends TestCase
             ->withAddedHeader("test1", $value);
     }
 
+    public function test_AddHeaderWithUnRegisteredHeaderName()
+    {
+        $message = new Message();
+
+        $name = "name1";
+        $value = ["value1"];
+        $message->withAddedHeader($name, $value);
+
+        $this->assertEquals($message->getHeader($name), $value);
+    }
+
     public function test_WithoutHeader()
     {
         $message = new Message();
