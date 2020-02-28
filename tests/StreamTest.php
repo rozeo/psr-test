@@ -154,4 +154,13 @@ class StreamTest extends TestCase
             (string)$stream === "1000000"
         );
     }
+
+    public function test_Rewind()
+    {
+        $stream = new Stream();
+        $stream->write("123456");
+        $stream->rewind();
+
+        $this->assertTrue($stream->tell() === 0);
+    }
 }
