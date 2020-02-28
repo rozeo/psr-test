@@ -2,8 +2,9 @@
 
 namespace Rozeo\Psr7;
 
-class Request extends Message
-    implements Psr\Http\Message\RequestInterface
+use Psr\Http\Message\RequestInterface;
+
+class Request extends Message implements RequestInterface
 {
 
     /**
